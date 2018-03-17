@@ -8,8 +8,13 @@ var FeatureSchema = new Schema(
         type: [{type: String}],
         topic: [{type: String}],
         tag: [{type: String}],
-        episode: {type: Schema.ObjectId, ref: 'episode'}
+        episode: {type: Schema.ObjectId, ref: 'episode'},
+        timestamp: {type: String}
     }
 );
+
+// FeatureSchema.virtual('timestampFormat').set(function() {
+
+// })
 
 module.exports = mongoose.model('Feature', FeatureSchema);
