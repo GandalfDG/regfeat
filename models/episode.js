@@ -12,7 +12,8 @@ var EpisodeSchema = new Schema(
         feature: [{type: Schema.ObjectId, ref: 'Feature'}],
         jingle: [{type: Schema.ObjectId, ref: 'Jingle'}],
         type: {type: string},
-        tags: [{type: String}]
+        tags: [{type: String}],
+        link: {type: String}
     }
 );
 
