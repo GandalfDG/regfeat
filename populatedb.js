@@ -22,22 +22,35 @@ var Episode = require('./models/episode')
 var episodes = []
 
 function episodeCreate(episode_rss) {
-    var episode = new Episode({ rss: episode_rss });
-    episode.save(function (err, episode) {
-        if (err) {
-            console.log('error saving episode: ', err);
-            console.log('episode: ' + JSON.stringify(episode));
+    // see if an episode with the same timestamp already exists
+    Episode.findOne({ 'date': episode_rss.isoDate }).exec(function (err, found_date) {
+        if (err) { return next(err); }
+        // if the episode already exists, don't save the new one
+        if (found_date) {
+            console.log('episode from: ' + found_date.date + ' already exists');
         }
-        console.log('episode saved: ' + episode.fullTitle);
+
+        // otherwise save it to the database
+        else {
+            var episode = new Episode({ rss: episode_rss });
+
+            episode.save(function (err, episode) {
+                if (err) {
+                    console.log('error saving episode: ', err);
+                    console.log('episode: ' + JSON.stringify(episode));
+                }
+                console.log('episode saved: ' + episode.fullTitle);
+            });
+            episodes.push(episode);
+        }
     });
-    episodes.push(episode);
+
 }
 
 //rss parser setup
 let rss = new rss_parser();
 rss.parseURL('http://feeds.soundcloud.com/users/soundcloud:users:39773595/sounds.rss', function (err, feed) {
     console.log(feed.title);
-    episodeCreate(feed.items[1]);
     async.forEach(feed.items, function (item, callback) {
         episodeCreate(item);
         callback();
