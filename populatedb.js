@@ -9,7 +9,6 @@ if (!userArgs[0].startsWith('mongodb://')) {
 
 var async = require('async')
 var rss_parser = require('rss-parser')
-var Episode = require('./models/episode')
 
 var mongoose = require('mongoose');
 var mongoDB = userArgs[0];
@@ -18,13 +17,16 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+var Episode = require('./models/episode')
+
 var episodes = []
 
 function episodeCreate(episode_rss) {
     var episode = new Episode({ rss: episode_rss });
-    episode.save(function (err, episode) {  
-        if(err) {
+    episode.update(function (err, episode) {
+        if (err) {
             console.log('error saving episode: ', err);
+            console.log('episode: ' + JSON.stringify(episode));
         }
         console.log('episode saved: ' + episode.fullTitle);
     });
@@ -33,12 +35,24 @@ function episodeCreate(episode_rss) {
 
 //rss parser setup
 let rss = new rss_parser();
-(async function() {
-  let feed = await rss.parseURL('http://feeds.soundcloud.com/users/soundcloud:users:39773595/sounds.rss');
-  console.log(feed.title);
-
-  feed.items.forEach(function(item) {
-    episodeCreate(item);
-  });
-  mongoose.connection.close();
-})();
+rss.parseURL('http://feeds.soundcloud.com/users/soundcloud:users:39773595/sounds.rss', function (err, feed) {
+    console.log(feed.title);
+    episodeCreate(feed.items[1]);
+    async.forEach(feed.items, function (item, callback) {
+        episodeCreate(item);
+        callback();
+    }, function (err) {
+        if (err) {
+            console.log('poop');
+        }
+        else {
+            console.log('all done');
+        }
+    });
+    // feed.items.forEach(function (item) {
+    //     if (item.title) {
+    //         episodeCreate(item);
+    //     }
+    // });
+    // mongoose.connection.close();
+});
