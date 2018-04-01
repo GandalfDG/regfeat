@@ -20,7 +20,7 @@ mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection 
 var Episode = require('./models/episode')
 
 var episodes = []
-
+var counter = 0;
 function episodeCreate(episode_rss) {
     // see if an episode with the same timestamp already exists
     Episode.findOne({ 'date': episode_rss.isoDate }).exec(function (err, found_date) {
@@ -28,20 +28,25 @@ function episodeCreate(episode_rss) {
         // if the episode already exists, don't save the new one
         if (found_date) {
             console.log('episode from: ' + found_date.date + ' already exists');
+            counter++;
+            console.log(counter);
         }
 
         // otherwise save it to the database
         else {
             var episode = new Episode({ rss: episode_rss });
 
-            episode.save(function (err, episode) {
+            episode.save().then(function (episode) {
                 if (err) {
                     console.log('error saving episode: ', err);
                     console.log('episode: ' + JSON.stringify(episode));
                 }
                 console.log('episode saved: ' + episode.fullTitle);
+                episodes.push(episode);
+                counter++;
+                console.log(counter);
             });
-            episodes.push(episode);
+
         }
     });
 
@@ -49,8 +54,10 @@ function episodeCreate(episode_rss) {
 
 //rss parser setup
 let rss = new rss_parser();
+let numitems = 0;
 rss.parseURL('http://feeds.soundcloud.com/users/soundcloud:users:39773595/sounds.rss', function (err, feed) {
     console.log(feed.title);
+    numitems = feed.items.length;
     async.forEach(feed.items, function (item, callback) {
         episodeCreate(item);
         callback();
@@ -62,10 +69,13 @@ rss.parseURL('http://feeds.soundcloud.com/users/soundcloud:users:39773595/sounds
             console.log('all done');
         }
     });
-    // feed.items.forEach(function (item) {
-    //     if (item.title) {
-    //         episodeCreate(item);
-    //     }
-    // });
-    // mongoose.connection.close();
-});
+    async.until(function () {
+        return counter >= numitems;
+    }, function (callback) {
+        setTimeout(callback, 1000);
+    }, function (err) {
+        mongoose.connection.close();
+        process.exit();
+    });
+}
+);
