@@ -23,7 +23,7 @@ var episodes = []
 
 function episodeCreate(episode_rss) {
     var episode = new Episode({ rss: episode_rss });
-    episode.update(function (err, episode) {
+    episode.save(function (err, episode) {
         if (err) {
             console.log('error saving episode: ', err);
             console.log('episode: ' + JSON.stringify(episode));
