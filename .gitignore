@@ -62,3 +62,5 @@ typings/
 
 # don't publish my password online
 credentials.js
+
+.vscode/launch.json
