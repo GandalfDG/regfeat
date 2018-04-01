@@ -5,8 +5,8 @@ var Schema = mongoose.Schema;
 var EpisodeSchema = new Schema(
     {
         title: {type: String, required: true},
-        number: {type: Number, required: true, unique: true},
-        date: {type: Date, required: true},
+        number: {type: Number},
+        date: {type: Date, required: true, index: true},
         description: {type: String},
         member: [{type: Schema.ObjectId, ref: 'Member'}],
         feature: [{type: Schema.ObjectId, ref: 'Feature'}],
@@ -25,7 +25,7 @@ EpisodeSchema.virtual('fullTitle').set(function(title) {
     var parts = title.split(':');
     if(parts[1]) {
         this.title = parts[1].trim();
-        this.number = parts[0];
+        this.number = parts[0].replace(/\D/g,'');
     }
     else {
         this.title = parts[0].trim();
