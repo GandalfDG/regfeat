@@ -24,8 +24,13 @@ EpisodeSchema.virtual('fullTitle').get(function() {
 EpisodeSchema.virtual('fullTitle').set(function(title) {
     var parts = title.split(':');
     if(parts[1]) {
-        this.title = parts[1].trim();
-        this.number = parts[0].replace(/\D/g,'');
+        if(parseFloat(parts[0])) {
+            this.number = parseFloat(parts[0]);
+            this.title = parts[1].trim();
+        }
+        else {
+            this.title = title.trim();
+        }
     }
     else {
         this.title = parts[0].trim();
