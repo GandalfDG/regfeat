@@ -20,7 +20,7 @@ mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection 
 
 var Episode = require('./models/episode')
 
-var episodes = []
+var episodes = [];
 var counter = 0;
 var savedCount = 0;
 function episodeCreate(episode_rss) {
@@ -79,7 +79,10 @@ rss.parseURL('http://feeds.soundcloud.com/users/soundcloud:users:39773595/sounds
     }, function (err) {
         mongoose.connection.close();
         let timestamp = moment();
-        console.log(savedCount + ' episodes saved to the database on ' + timestamp.format('MMMM Do YYYY, h:mm:ss a'));
+        console.log(savedCount + ' episode(s) saved to the database on ' + timestamp.format('MMMM Do YYYY, h:mm:ss a'));
+        episodes.forEach(function(episode) {
+            console.log(episode.fullTitle + '\n');
+        });
         process.exit();
     });
 }
