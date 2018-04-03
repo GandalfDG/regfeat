@@ -79,7 +79,7 @@ rss.parseURL('http://feeds.soundcloud.com/users/soundcloud:users:39773595/sounds
     }, function (err) {
         mongoose.connection.close();
         let timestamp = moment();
-        console.log(savedCount + ' episodes saved to the database at ' + timestamp.format('MMMM Do YYYY, h:mm:ss a'));
+        console.log(savedCount + ' episodes saved to the database on ' + timestamp.format('MMMM Do YYYY, h:mm:ss a'));
         process.exit();
     });
 }
