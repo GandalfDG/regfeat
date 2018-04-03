@@ -80,9 +80,11 @@ rss.parseURL('http://feeds.soundcloud.com/users/soundcloud:users:39773595/sounds
         mongoose.connection.close();
         let timestamp = moment();
         console.log(savedCount + ' episode(s) saved to the database on ' + timestamp.format('MMMM Do YYYY, h:mm:ss a'));
-        episodes.forEach(function(episode) {
-            console.log(episode.fullTitle + '\n');
-        });
+        if(episodes.length > 0) {
+		episodes.forEach(function(episode) {
+        	    console.log(episode.fullTitle + '\n');
+        	});
+	}
         process.exit();
     });
 }
