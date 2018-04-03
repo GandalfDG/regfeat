@@ -31,7 +31,7 @@ function episodeCreate(episode_rss) {
         if (found_date) {
             // console.log('episode from: ' + found_date.date + ' already exists');
             counter++;
-            console.log(counter);
+            // console.log(counter);
         }
 
         // otherwise save it to the database
