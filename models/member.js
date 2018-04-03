@@ -11,4 +11,8 @@ var MemberSchema = new Schema(
     }
 );
 
+MemberSchema.virtual('url').get(function() {
+    return '/members/' + this._id;
+});
+
 module.exports = mongoose.model('Member', MemberSchema);

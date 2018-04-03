@@ -13,6 +13,9 @@ var FeatureSchema = new Schema(
     }
 );
 
+FeatureSchema.virtual('url').get(function() {
+    return '/features/' + this._id;
+});
 // FeatureSchema.virtual('timestampFormat').set(function() {
 
 // })

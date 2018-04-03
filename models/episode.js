@@ -35,13 +35,17 @@ EpisodeSchema.virtual('fullTitle').set(function(title) {
     else {
         this.title = parts[0].trim();
     }
-})
+});
 
 EpisodeSchema.virtual('rss').set(function(episode_rss) {
     this.fullTitle = episode_rss.title;
     this.date = episode_rss.isoDate;
     this.description = episode_rss.content;
     this.link = episode_rss.link;
-})
+});
+
+EpisodeSchema.virtual('url').get(function() {
+    return '/episodes/' + this._id;
+});
 
 module.exports = mongoose.model('Episode', EpisodeSchema);
