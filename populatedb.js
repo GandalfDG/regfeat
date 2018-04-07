@@ -7,8 +7,9 @@ if (!userArgs[0].startsWith('mongodb://')) {
     return
 }
 
-var async = require('async')
-var rss_parser = require('rss-parser')
+var async = require('async');
+var rss_parser = require('rss-parser');
+var moment = require('moment');
 
 var mongoose = require('mongoose');
 var mongoDB = userArgs[0];
@@ -19,17 +20,18 @@ mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection 
 
 var Episode = require('./models/episode')
 
-var episodes = []
+var episodes = [];
 var counter = 0;
+var savedCount = 0;
 function episodeCreate(episode_rss) {
     // see if an episode with the same timestamp already exists
     Episode.findOne({ 'date': episode_rss.isoDate }).exec(function (err, found_date) {
         if (err) { return next(err); }
         // if the episode already exists, don't save the new one
         if (found_date) {
-            console.log('episode from: ' + found_date.date + ' already exists');
+            // console.log('episode from: ' + found_date.date + ' already exists');
             counter++;
-            console.log(counter);
+            // console.log(counter);
         }
 
         // otherwise save it to the database
@@ -41,10 +43,11 @@ function episodeCreate(episode_rss) {
                     console.log('error saving episode: ', err);
                     console.log('episode: ' + JSON.stringify(episode));
                 }
-                console.log('episode saved: ' + episode.fullTitle);
+                // console.log('episode saved: ' + episode.fullTitle);
                 episodes.push(episode);
                 counter++;
-                console.log(counter);
+                savedCount++;
+                // console.log(counter);
             });
 
         }
@@ -75,6 +78,13 @@ rss.parseURL('http://feeds.soundcloud.com/users/soundcloud:users:39773595/sounds
         setTimeout(callback, 1000);
     }, function (err) {
         mongoose.connection.close();
+        let timestamp = moment();
+        console.log(savedCount + ' episode(s) saved to the database on ' + timestamp.format('MMMM Do YYYY, h:mm:ss a'));
+        if(episodes.length > 0) {
+		episodes.forEach(function(episode) {
+        	    console.log(episode.fullTitle + '\n');
+        	});
+	}
         process.exit();
     });
 }

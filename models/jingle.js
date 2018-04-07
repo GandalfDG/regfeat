@@ -9,4 +9,8 @@ var JingleSchema = new Schema(
     }
 );
 
+JingleSchema.virtual('url').get(function() {
+    return '/jingles/' + this._id;
+});
+
 module.exports = mongoose.model('Episode', JingleSchema);
