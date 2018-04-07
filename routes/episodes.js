@@ -4,3 +4,5 @@ var router = express.Router();
 var episode_controller = require('../controllers/episodeController');
 
 router.get('/', episode_controller.episode_list);
+
+module.exports = router;
