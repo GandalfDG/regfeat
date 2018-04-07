@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  
+  ul
+  each episode in episode_list
+    li 
+      a(href=episode.link) #{episode.fullTitle} 
+
+  else
+    li There are no episodes.
