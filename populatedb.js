@@ -1,18 +1,12 @@
-console.log('fetching data from regular features RSS feed')
-
-// Get arguments passed on command line
-var userArgs = process.argv.slice(2);
-if (!userArgs[0].startsWith('mongodb://')) {
-    console.log('ERROR: You need to specify a valid mongodb URL as the first argument');
-    return
-}
+console.log('fetching data from regular features RSS feed');
 
 var async = require('async');
 var rss_parser = require('rss-parser');
 var moment = require('moment');
+var credentials = require('./credentials');
 
 var mongoose = require('mongoose');
-var mongoDB = userArgs[0];
+var mongoDB = 'mongodb://' + credentials.username + ":" + credentials.password + '@ds115569.mlab.com:15569/regularfeach';
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
@@ -80,11 +74,11 @@ rss.parseURL('http://feeds.soundcloud.com/users/soundcloud:users:39773595/sounds
         mongoose.connection.close();
         let timestamp = moment();
         console.log(savedCount + ' episode(s) saved to the database on ' + timestamp.format('MMMM Do YYYY, h:mm:ss a'));
-        if(episodes.length > 0) {
-		episodes.forEach(function(episode) {
-        	    console.log(episode.fullTitle + '\n');
-        	});
-	}
+        if (episodes.length > 0) {
+            episodes.forEach(function (episode) {
+                console.log(episode.fullTitle + '\n');
+            });
+        }
         process.exit();
     });
 }
