@@ -7,12 +7,12 @@ block content
   div(class='container') 
     each episode in episode_list
       ul(class="list-unstyled")
-        li(class='media bg-light rounded')
-          img(class='align-self-center mr-3', src=episode.imageURL, style='width:72px;height:72px;')
+        li(class='media bg-light p-2 rounded')
+          img(class='align-self-center mr-3 rounded', src=episode.imageURL, style='width:72px;height:72px;')
           div(class='media-body')
             a(href=episode.url)
               h3(class='mt-0') #{episode.fullTitle}
-            p #{episode.description}
+            p(class='text-muted') #{episode.description}
 
     else
       h3 There are no episodes.
