@@ -13,7 +13,8 @@ var EpisodeSchema = new Schema(
         jingle: [{type: Schema.ObjectId, ref: 'Jingle'}],
         type: {type: String},
         tags: [{type: String}],
-        link: {type: String}
+        link: {type: String},
+        imageURL: {type: String}
     }
 );
 
@@ -42,6 +43,7 @@ EpisodeSchema.virtual('rss').set(function(episode_rss) {
     this.date = episode_rss.isoDate;
     this.description = episode_rss.content;
     this.link = episode_rss.link;
+    this.imageURL = episode_rss.itunes.image;
 });
 
 EpisodeSchema.virtual('url').get(function() {
