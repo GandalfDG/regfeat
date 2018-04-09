@@ -1,5 +1,3 @@
-console.log('fetching data from regular features RSS feed');
-
 var async = require('async');
 var rss_parser = require('rss-parser');
 var moment = require('moment');
@@ -53,17 +51,18 @@ function episodeCreate(episode_rss) {
 let rss = new rss_parser();
 let numitems = 0;
 rss.parseURL('http://feeds.soundcloud.com/users/soundcloud:users:39773595/sounds.rss', function (err, feed) {
-    console.log(feed.title);
+//    console.log(feed.title);
     numitems = feed.items.length;
     async.forEach(feed.items, function (item, callback) {
         episodeCreate(item);
         callback();
     }, function (err) {
         if (err) {
-            console.log('poop');
+            console.log('there was an error while parsing the RSS feed:\n');
+	    console.log(JSON.stringify(err));	
         }
         else {
-            console.log('all done');
+//            console.log('all done');
         }
     });
     async.until(function () {
@@ -73,12 +72,17 @@ rss.parseURL('http://feeds.soundcloud.com/users/soundcloud:users:39773595/sounds
     }, function (err) {
         mongoose.connection.close();
         let timestamp = moment();
-        console.log(savedCount + ' episode(s) saved to the database on ' + timestamp.format('MMMM Do YYYY, h:mm:ss a'));
-        if (episodes.length > 0) {
-            episodes.forEach(function (episode) {
-                console.log(episode.fullTitle + '\n');
-            });
-        }
+	if(savedCount <= 0) {
+		console.log('no updates on ' + timestamp.format('MMMM Do YYYY, h:mm:ss a'));
+	}
+	else {
+        	console.log(savedCount + ' episode(s) saved to the database on ' + timestamp.format('MMMM Do YYYY, h:mm:ss a'));
+        	if(episodes.length > 0) {
+			episodes.forEach(function(episode) {
+        	    	console.log(episode.fullTitle + '\n');
+        		});
+		}
+	}
         process.exit();
     });
 }
