@@ -4,16 +4,14 @@ block content
   h1= title
   
   // https://bootsnipp.com/snippets/Qbkm1
-  div(class='container')
-    div(class='span8')
-      ul
-      each episode in episode_list
-        h3 #{episode.fullTitle}
-        p #{episode.description}
-        div
-          div(class='edit label')
-            a(href=episode.url) details
-        hr
+  div(class='container') 
+    each episode in episode_list
+      div(class='media')
+        img(class='mr-3', src=episode.imageURL, style='width:64px;height:64px;')
+        div(class='media-body')
+          a(href=episode.url)
+            h3(class='mt-0') #{episode.fullTitle}
+          p #{episode.description}
 
-      else
-        li There are no episodes.
+    else
+      h3 There are no episodes.
