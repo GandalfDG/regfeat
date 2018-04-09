@@ -5,4 +5,6 @@ var episode_controller = require('../controllers/episodeController');
 
 router.get('/', episode_controller.episode_list);
 
+router.get('/:id', episode_controller.episode_detail);
+
 module.exports = router;
