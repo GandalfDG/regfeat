@@ -7,7 +7,7 @@ block content
   div(class='container') 
     each episode in episode_list
       div(class='media')
-        img(class='mr-3', src=episode.imageURL, style='width:64px;height:64px;')
+        img(class='align-self-center mr-3', src=episode.imageURL, style='width:72px;height:72px;')
         div(class='media-body')
           a(href=episode.url)
             h3(class='mt-0') #{episode.fullTitle}
