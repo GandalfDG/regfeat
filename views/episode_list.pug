@@ -6,12 +6,13 @@ block content
   // https://bootsnipp.com/snippets/Qbkm1
   div(class='container') 
     each episode in episode_list
-      div(class='media')
-        img(class='align-self-center mr-3', src=episode.imageURL, style='width:72px;height:72px;')
-        div(class='media-body')
-          a(href=episode.url)
-            h3(class='mt-0') #{episode.fullTitle}
-          p #{episode.description}
+      ul(class="list-unstyled")
+        li(class='media bg-light rounded')
+          img(class='align-self-center mr-3', src=episode.imageURL, style='width:72px;height:72px;')
+          div(class='media-body')
+            a(href=episode.url)
+              h3(class='mt-0') #{episode.fullTitle}
+            p #{episode.description}
 
     else
       h3 There are no episodes.
