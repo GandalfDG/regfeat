@@ -3,10 +3,18 @@ extends layout
 block content
   h1= title
   
-  ul
-  each episode in episode_list
-    li 
-      a(href=episode.link) #{episode.fullTitle} 
+  // https://bootsnipp.com/snippets/Qbkm1
+  div(class='container')
+    div(class='span8')
 
-  else
-    li There are no episodes.
+      ul
+      each episode in episode_list
+        li 
+          h3 #{episode.fullTitle}
+          p #{episode.description}
+          div
+            div(class='edit label')
+              a(href=episode.url) details
+
+      else
+        li There are no episodes.
