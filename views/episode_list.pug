@@ -6,15 +6,14 @@ block content
   // https://bootsnipp.com/snippets/Qbkm1
   div(class='container')
     div(class='span8')
-
       ul
       each episode in episode_list
-        li 
-          h3 #{episode.fullTitle}
-          p #{episode.description}
-          div
-            div(class='edit label')
-              a(href=episode.url) details
+        h3 #{episode.fullTitle}
+        p #{episode.description}
+        div
+          div(class='edit label')
+            a(href=episode.url) details
+        hr
 
       else
         li There are no episodes.
