@@ -1,4 +1,27 @@
 extends layout
 
 block content
-    h1=title
+    h1= title
+    p= episode.description
+    ul
+      each member in episode.member
+        li #{member.name}
+      
+      else 
+        li no members associated with this episode
+    
+    ul
+      each feature in episode.feature
+        li #{feature.title}
+      
+      else 
+        li no features associated with this episode
+
+    ul
+      each jingle in episode.jingle
+        li #{jingle.title}
+      
+      else 
+        li no jingles associated with this episode
+
+    img(src=episode.imageURL style='width:256px;height:256px;' class='rounded')

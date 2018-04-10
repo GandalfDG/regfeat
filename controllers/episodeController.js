@@ -1,4 +1,7 @@
 var Episode = require('../models/episode');
+var Member = require('../models/member');
+var Feature = require('../models/feature');
+var Jingle = require('../models/jingle');
 
 //list all episodes ordered by date in descending order
 exports.episode_list = function(req, res) {
@@ -9,7 +12,7 @@ exports.episode_list = function(req, res) {
 };
 
 exports.episode_detail = function(req, res) {
-    Episode.find({_id: req.params.id}).exec(function (err, episode) {
+    Episode.find({_id: req.params.id}).populate('member').populate('feature').populate('jingle').exec(function (err, episode) {
         if(err) {return next(err);}
         let singleEpisode = episode[0];
         res.render('episode_detail', {title: singleEpisode.fullTitle + ' - details', episode: singleEpisode});
