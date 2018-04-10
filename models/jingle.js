@@ -4,12 +4,12 @@ var Schema = mongoose.Schema;
 
 var JingleSchema = new Schema(
     {
-        title: {type: String, required: true},
-        episode: [{type: Schema.ObjectId, ref: 'episode'}]
+        title: { type: String, required: true },
+        episode: [{ type: Schema.ObjectId, ref: 'episode' }]
     }
 );
 
-JingleSchema.virtual('url').get(function() {
+JingleSchema.virtual('url').get(function () {
     return '/jingles/' + this._id;
 });
 
