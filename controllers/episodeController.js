@@ -11,6 +11,7 @@ exports.episode_list = function(req, res) {
     });
 };
 
+//find the episode by the id in the URL and render all relevant information
 exports.episode_detail = function(req, res) {
     Episode.find({_id: req.params.id}).populate('member').populate('feature').populate('jingle').exec(function (err, episode) {
         if(err) {return next(err);}
