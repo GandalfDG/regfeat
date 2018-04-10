@@ -13,4 +13,4 @@ JingleSchema.virtual('url').get(function() {
     return '/jingles/' + this._id;
 });
 
-module.exports = mongoose.model('Episode', JingleSchema);
+module.exports = mongoose.model('Jingle', JingleSchema);
