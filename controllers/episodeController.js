@@ -3,7 +3,7 @@ var Member = require('../models/member');
 var Feature = require('../models/feature');
 var Jingle = require('../models/jingle');
 
-//list all episodes ordered by date in descending order
+//render all episodes ordered by date in descending order
 exports.episode_list = function (req, res) {
     Episode.find().sort([['date', 'descending']]).exec(function (err, list_episodes) {
         if (err) { return next(err); }
