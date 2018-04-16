@@ -1,0 +1,7 @@
+extends layout
+
+block content
+    form(method='post')
+        label(for='episode_title') Title:
+        input(id='episode_title', type='text', name='episode_title_field' value=episode.fullTitle)
+        input(type='submit' value='OK')
