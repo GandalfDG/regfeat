@@ -16,6 +16,14 @@ exports.episode_detail = function (req, res) {
     Episode.find({ _id: req.params.id }).populate('member').populate('feature').populate('jingle').exec(function (err, episode) {
         if (err) { return next(err); }
         let singleEpisode = episode[0];
-        res.render('episode_detail', { title: singleEpisode.fullTitle + ' - details', episode: singleEpisode });
+        res.render('episode_detail', { title: singleEpisode.fullTitle + ' - details', episode: singleEpisode, updateURL: '/episodes/edit/' + req.params.id });
+    });
+}
+
+exports.episode_update = function (req, res) {
+    Episode.find({ _id: req.params.id }).populate('member').populate('feature').populate('jingle').exec(function (err, episode) {
+        if (err) { return next(err); }
+        let singleEpisode = episode[0];
+        res.render('episode_update', { title: singleEpisode.fullTitle + ' - edit', episode: singleEpisode });
     });
 }
