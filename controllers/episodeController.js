@@ -27,3 +27,7 @@ exports.episode_update = function (req, res) {
         res.render('episode_update', { title: singleEpisode.fullTitle + ' - edit', episode: singleEpisode });
     });
 }
+
+exports.episode_validate = function (req, res) {
+    res.next();
+};
