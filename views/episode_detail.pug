@@ -3,6 +3,7 @@ extends layout
 block content
     h1= title
     p= episode.description
+    a(class='btn btn-primary', href=updateURL) Edit
     ul
       each member in episode.member
         li #{member.name}
