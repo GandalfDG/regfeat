@@ -60,6 +60,8 @@ typings/
 # next.js build output
 .next
 
+out.txt
+
 # don't publish my password online
 credentials.js
 credentials.json
