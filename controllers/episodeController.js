@@ -29,5 +29,5 @@ exports.episode_update = function (req, res) {
 }
 
 exports.episode_validate = function (req, res) {
-    res.next();
+    res.redirect(req.originalUrl);
 };
