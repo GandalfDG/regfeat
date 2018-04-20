@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= title
+  
+  // https://bootsnipp.com/snippets/Qbkm1
+  div(class='container') 
+    each member in member_list
+      ul(class="list-unstyled")
+        li(class='media bg-light p-2 rounded')
+          div(class='media-body')
+            a(href=member.url)
+              h3(class='mt-0') #{member.name}
+
+    else
+      h3 There are no members.
