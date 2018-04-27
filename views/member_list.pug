@@ -10,7 +10,9 @@ block content
         li(class='media bg-light p-2 rounded')
           div(class='media-body')
             a(href=member.url)
-              h3(class='mt-0') #{member.name}
+              h3(class='mt-0') #{member.full_name}
 
     else
       h3 There are no members.
+    
+  a(class='btn btn-primary', href='/members/create') Add Member

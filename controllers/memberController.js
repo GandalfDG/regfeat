@@ -10,7 +10,7 @@ exports.member_list = function (req, res, next) {
 }
 
 exports.member_create_form = function (req, res, next) {
-    res.render('member_add', { title: 'Add Member' });
+    res.render('member_create', { title: 'Add Member' });
 }
 
 exports.member_create = [
@@ -18,7 +18,7 @@ exports.member_create = [
     // validate fields
     body('first_name').isLength({ min: 1 }).trim().withMessage("First name is required").isAlphanumeric().withMessage('First name contains illegal characters'),
     body('last_name').isLength({ min: 1 }).trim().withMessage("Last name is required").isAlphanumeric().withMessage('Last name contains illegal characters'),
-    body('nickname').optional().trim().isAlphanumeric().withMessage('Nickname contains illegal characters'),
+    body('nickname').optional({ checkFalsy: true }).trim().isAlphanumeric().withMessage('Nickname contains illegal characters'),
 
     // sanitize fields
     sanitizeBody('first_name').trim().escape(),
@@ -30,7 +30,7 @@ exports.member_create = [
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            res.render('member_add', { title: 'Add Member', member: req.body, errors: errors.array() });
+            res.render('member_create', { title: 'Add Member', member: req.body, errors: errors.array() });
             return;
         }
         else {
@@ -42,7 +42,7 @@ exports.member_create = [
                 });
                 member.save(function(err) {
                     if(err) {return next(err);}
-                    res.redirect(member.url);
+                    res.redirect('/members');
                 })
         }
     }
