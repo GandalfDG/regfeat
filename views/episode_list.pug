@@ -8,7 +8,7 @@ block content
     each episode in episode_list
       ul(class="list-unstyled")
         li(class='media bg-light p-2 rounded')
-          img(class='align-self-center mr-3 rounded', src=episode.imageURL, style='width:72px;height:72px;')
+          img(class='align-self-center mr-3 rounded', src=(episode.imageURL.length > 0 ? episode.imageURL : 'http://i1.sndcdn.com/avatars-000042010028-01kxiv-original.jpg'), style='width:72px;height:72px;')
           div(class='media-body')
             a(href=episode.url)
               h3(class='mt-0') #{episode.fullTitle}
