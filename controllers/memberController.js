@@ -40,10 +40,16 @@ exports.member_create = [
                     last_name: req.body.last_name,
                     nickname: req.body.nickname
                 });
-                member.save(function(err) {
-                    if(err) {return next(err);}
-                    res.redirect('/members');
-                })
+            Member.findOne({ 'first_name': member.first_name, 'last_name': member.last_name }).exec(function (err, foundmember) {
+                if (!foundmember) {
+                    member.save(function (err) {
+                        if (err) { return next(err); }
+                        res.redirect('/members');
+                    });
+                }
+                else { res.redirect('/members'); }
+            });
+
         }
     }
 ];
