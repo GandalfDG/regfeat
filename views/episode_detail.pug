@@ -18,6 +18,8 @@ block content
       else 
         li no features associated with this episode
 
+    a(type='button', class='btn btn-outline-primary' href='/features/create?episode=' + episode._id) add feature
+
     ul
       each jingle in episode.jingle
         li #{jingle.title}
