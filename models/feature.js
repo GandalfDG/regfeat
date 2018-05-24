@@ -9,6 +9,7 @@ var FeatureSchema = new Schema(
         type: [{ type: String }],
         topic: [{ type: String }],
         tag: [{ type: String }],
+        summary: {type: String},
         episode: { type: Schema.ObjectId, ref: 'episode' },
         timestamp: { type: String }
     }
