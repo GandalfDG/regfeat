@@ -40,6 +40,9 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/episodes', episodes);
 app.use('/members', members);
+app.use('/features/create', function(req, res) {
+  res.render('feature_create');
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
