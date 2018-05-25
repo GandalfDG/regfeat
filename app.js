@@ -13,6 +13,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var episodes = require('./routes/episodes');
 var members = require('./routes/members');
+var features = require('./routes/features');
 
 var app = express();
 
@@ -40,9 +41,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/episodes', episodes);
 app.use('/members', members);
-app.use('/features/create', function(req, res) {
-  res.render('feature_create');
-});
+app.use('/features', features);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

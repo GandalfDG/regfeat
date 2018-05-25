@@ -7,13 +7,17 @@ block content
     div.form-group
       label(for='feature_title') Title:
       input#feature_title.form-control(type='text', placeholder='Title' name='feature_title' required='true' value=(undefined===feature ? '' : feature.title) )
+      
       label(for='member') Member:
       select#member.form-control(class='custom-select')
         option(selected) Select a member
-        for member in members
-            option #{member.first_name}
+        //- for member in members
+        //-     option #{member.first_name}
+      
       label(for='feature_summary') Summary:
       textarea#feature_summary.form-control(name="feature_summary", cols="30", rows="5")
+      
+      input(type="submmit" class="btn btn-primary mt-3" value="Save")
 
   if errors 
     ul
