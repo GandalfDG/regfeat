@@ -31,12 +31,27 @@ exports.feature_save = [
             var feature = new Feature(
                 {
                     member: req.body.member,
-                    title: req.body.title,
-                    summary: req.body.summary,
+                    title: req.body.feature_title,
+                    summary: req.body.feature_summary,
                     episode: req.query.episode
                 }
             );
-            res.redirect('/episodes/' + req.query.episode);
+            //add the feature to the episode
+            if (req.query.episode) {
+                Episode.findByIdAndUpdate(req.query.episode, { $push: { feature: feature } }, function (err, episode) {
+                    if (err) { return next(err); }
+                });
+            }
+            if (req.body.member) {
+                Member.findByIdAndUpdate(req.body.member, { $push: { feature: feature } }, function (err, member) {
+                    if (err) { return next(err); }
+                });
+            }
+            feature.save(function (err) {
+                if (err) { return next(err); }
+                res.redirect('/episodes/' + req.query.episode);
+            });
+
         };
     }
 ];

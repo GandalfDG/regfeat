@@ -13,7 +13,8 @@ block content
     
     ul
       each feature in episode.feature
-        li #{feature.title}
+        li
+          a(href=feature.url) #{feature.title}
       
       else 
         li no features associated with this episode
