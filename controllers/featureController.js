@@ -43,9 +43,18 @@ exports.feature_save = [
                 });
             }
             if (req.body.member) {
-                Member.findByIdAndUpdate(req.body.member, { $push: { feature: feature } }, function (err, member) {
-                    if (err) { return next(err); }
-                });
+                if (req.body.member.constructor === Array) {
+                    req.body.member.forEach(element => {
+                        Member.findByIdAndUpdate(element.member, { $push: { feature: feature } }, function (err, member) {
+                            if (err) { return next(err); }
+                        });
+                    });
+                }
+                else {
+                    Member.findByIdAndUpdate(req.body.member, { $push: { feature: feature } }, function (err, member) {
+                        if (err) { return next(err); }
+                    });
+                }
             }
             feature.save(function (err) {
                 if (err) { return next(err); }

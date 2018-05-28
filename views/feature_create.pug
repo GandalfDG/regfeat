@@ -9,7 +9,7 @@ block content
       input#feature_title.form-control(type='text', placeholder='Title' name='feature_title' required='true' value=(undefined===feature ? '' : feature.title) )
       
       label(for='member') Member:
-      select#member.form-control(class='custom-select' name='member')
+      select#member.form-control(multiple class='custom-select' name='member')
         option(selected value=undefined)=("Select a member")
         for member in members
             option(value=member._id) #{member.full_name}
